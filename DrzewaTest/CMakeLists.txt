@@ -10,8 +10,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 enable_testing()
 
 set(SOURCE_FILES
-    TreeTest.cpp
-    ../Drzewa/Drzewa.h
+    tree_test.cpp
+    ../Drzewa/drzewa.h
     )
 
 add_executable(DrzewaTest ${SOURCE_FILES} )

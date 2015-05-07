@@ -4,7 +4,7 @@ project(ASD)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
-    Sortowania.cpp
+    sortowania.cpp
     )
 
 add_executable(Sortowania ${SOURCE_FILES} )

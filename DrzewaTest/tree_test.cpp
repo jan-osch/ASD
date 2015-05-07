@@ -7,7 +7,7 @@
 //
 
 
-#include "../Drzewa/Drzewa.h"
+#include "../Drzewa/drzewa.h"
 #include <iostream>
 #include <gtest/gtest.h>
 
