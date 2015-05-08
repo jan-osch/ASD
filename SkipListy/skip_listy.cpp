@@ -17,9 +17,13 @@ int main(int argc, const char * argv[]){
     insert(*listka, 2);
     insert(*listka, 4);
     printSkipList( * listka);
-    SLNode* result = find(* listka, 7);
-    cout<< (result== nullptr)<<endl;
-    cout<<  result->level;
+    cout<< remove(* listka, 1)<<endl;
+    cout<< remove(* listka, 1)<<endl;
+    printSkipList(* listka);
+    remove(*listka, 3);
+    remove(*listka, 5);
+    remove(*listka, 4);
+    printSkipList(* listka);
 
     return 0;
 }

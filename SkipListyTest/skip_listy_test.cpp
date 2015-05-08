@@ -13,7 +13,7 @@
 
 #define MAX_LEVEL = 10
 
-TEST (insertTest,insertToEmptyTree)
+TEST (builderTest,buildSmallSkiplist)
 {
     SLNode* root =  new SLNode(1);
 

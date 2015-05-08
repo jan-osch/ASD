@@ -16,5 +16,6 @@ add_subdirectory(QuickerSort)
 add_subdirectory(Drzewa)
 add_subdirectory(SkipListy)
 add_subdirectory(SkipListyTest)
+add_subdirectory(HashTables)
 
 
