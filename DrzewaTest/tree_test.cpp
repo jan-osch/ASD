@@ -179,9 +179,29 @@ TEST (findPredecessor,findPredecessorInSmallTree)
     EXPECT_EQ(3, findSuccessor(root->left->right)->key);
 }
 
-void moveArrayInPlace(int array[], int n, int k){
-    
-    
+TEST (remove_from_tree, removeFromTreeExampleCormenPolishPage292){
+    int arr[] = {15,16,20,18,23,5,3,12,13,10,6,7};
+    node* my_tree_leaf = treeBuilder(arr,12);
+    node* my_tree_single_son = treeBuilder(arr,12);
+    node* my_tree_two_sons = treeBuilder(arr,12);
+
+    node* leaf_to_remove = find_node_by_key(my_tree_leaf,13);
+    node* single_son_to_remove = find_node_by_key(my_tree_single_son,16);
+    node* two_sons_to_remove = find_node_by_key(my_tree_two_sons,5);
+
+    remove_from_tree(my_tree_leaf, leaf_to_remove);
+    remove_from_tree(my_tree_single_son, single_son_to_remove);
+    remove_from_tree(my_tree_two_sons, two_sons_to_remove);
+
+    EXPECT_EQ(nullptr,find_node_by_key(my_tree_leaf, 12)->right);
+    EXPECT_EQ(nullptr,find_node_by_key(my_tree_leaf, 13));
+
+    EXPECT_EQ(20,find_node_by_key(my_tree_single_son, 15)->right->key);
+    EXPECT_EQ(nullptr,find_node_by_key(my_tree_single_son, 16));
+
+    EXPECT_EQ(6,find_node_by_key(my_tree_two_sons, 15)->left->key);
+    EXPECT_EQ(nullptr,find_node_by_key(my_tree_two_sons, 5));
+
 }
 
 int main(int argc, char * argv[])
