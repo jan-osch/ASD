@@ -3,9 +3,4 @@ project(ASD)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES
-    drzewa.h
-    drzewa.cpp
-    )
-
-add_executable(Drzewa ${SOURCE_FILES})
+add_executable(WzbogacaneDrzewa wzbogacone_drzewa.cpp wzbogacone_drzewa.h)

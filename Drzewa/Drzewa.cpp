@@ -1,5 +1,6 @@
 #include <iostream>
 #include "drzewa.h"
+
 using namespace std;
 
 int main(int argc, const char * argv[]) {
@@ -11,6 +12,4 @@ int main(int argc, const char * argv[]) {
 
     remove_from_tree(my_tree, to_remove);
     cout<< tree_to_string_with_tabs(my_tree);
-
-
 }

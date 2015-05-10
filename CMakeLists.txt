@@ -18,5 +18,6 @@ add_subdirectory(SkipListy)
 add_subdirectory(SkipListyTest)
 add_subdirectory(HashTables)
 add_subdirectory(RedBlackTrees)
+add_subdirectory(WzbogacaneDrzewa)
 
 
