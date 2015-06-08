@@ -1,3 +1,6 @@
+#ifndef GRAPHS_H
+#define GRAPHS_H
+
 //
 // Created by Janusz Grzesik on 10.05.15.
 //
@@ -114,3 +117,4 @@ string DFS(Graph* graph){
     }
     return result;
 }
+#endif

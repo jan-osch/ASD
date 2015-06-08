@@ -1,5 +1,6 @@
 #include <iostream>
 #include "graph_builder.h"
+#include "graphs.h"
 
 using namespace std;
 

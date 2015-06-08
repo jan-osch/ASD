@@ -12,10 +12,10 @@ int main(int argc, const char * argv[]) {
     red_black_insert(mytree,25);
     red_black_insert(mytree,55);
     red_black_insert(mytree,16);
+    cout<<tree_to_string_with_tabs(mytree);
 
 //    insert_BST_style(mytree,12);
 //    insert_BST_style(mytree,11);
-    cout<<tree_to_string_with_tabs(mytree);
 
     return 0;
 }

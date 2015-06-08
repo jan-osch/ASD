@@ -20,7 +20,6 @@ struct SLNode{
     int level;
     SLNode ** next;
 
-
     SLNode(int d, int l) {
         /*
          * Initialises a new Skip List Node
@@ -46,7 +45,6 @@ struct SkipList{
 };
 
 int getLevel(){
-
     int result = 0;
     while(result < MAX_LEVEL && rand() % 2 >0){
         result++;

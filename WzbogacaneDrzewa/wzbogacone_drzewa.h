@@ -94,3 +94,4 @@ void compute_ranks(PositionNode* root){
     }
     root->rank=new_rank;
 }
+

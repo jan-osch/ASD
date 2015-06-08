@@ -1,3 +1,5 @@
+#ifndef GRAPH_BUILDER_H
+#define GRAPH_BUILDER_H
 //
 // Created by Janusz Grzesik on 11.05.15.
 //
@@ -51,6 +53,8 @@ void display_graph(Graph* graph){
         }
     }
 }
+
+#endif
 
 /*
 Example graph Cormen page 541
