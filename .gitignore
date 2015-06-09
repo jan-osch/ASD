@@ -1,6 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
 *.iml
+*.gv
+*.gv.pdf
+
 ### C++ template
 # Compiled Object files
 *.slo

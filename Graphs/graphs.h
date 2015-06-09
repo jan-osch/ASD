@@ -27,13 +27,14 @@ struct GraphNode{
     int time_out;
 };
 
-struct Graph{
+struct NonWeightedDirectionalGraphOnLists {
     GraphNode** nodes;
     vector < vector <int> > edges;
     int number_of_nodes;
 };
 
-string BFS(Graph* graph, int index_to_start){
+
+string BFS(NonWeightedDirectionalGraphOnLists * graph, int index_to_start){
 
     for(int i=0; i<graph->number_of_nodes; i++){
         // Initialise all nodes in graph
@@ -77,7 +78,7 @@ string BFS(Graph* graph, int index_to_start){
 }
 
 
-void DFSVisit(Graph* graph, int index_to_visit, int & time, string & result){
+void DFSVisit(NonWeightedDirectionalGraphOnLists * graph, int index_to_visit, int & time, string & result){
     graph->nodes[index_to_visit]->color=GREY;
     graph->nodes[index_to_visit]->time_in=time;
     result+="\n";
@@ -96,7 +97,7 @@ void DFSVisit(Graph* graph, int index_to_visit, int & time, string & result){
     graph->nodes[index_to_visit]->time_out=time;
 }
 
-string DFS(Graph* graph){
+string DFS(NonWeightedDirectionalGraphOnLists * graph){
     // A Cormen style implementation of DFS
     // Recursively searches all nodes that adjust to current node in the graph
     // Changes colors of Nodes that are visited: WHITE->GREY->BLACK

@@ -6,7 +6,7 @@
 #include "graphs.h"
 #include <iostream>
 
-Graph* graph_builder(){
+NonWeightedDirectionalGraphOnLists * graph_builder(){
     // A function that helps to build a graph
     // In first line number of nodes is read
     // Then in second line lables for all nodes are read
@@ -29,14 +29,14 @@ Graph* graph_builder(){
             edges[i].push_back(temp);
         }
     }
-    Graph* result = new Graph();
+    NonWeightedDirectionalGraphOnLists * result = new NonWeightedDirectionalGraphOnLists();
     result->edges=edges;
     result->nodes=nodes;
     result->number_of_nodes=number_of_nodes;
     return result;
 }
 
-void display_graph(Graph* graph){
+void display_graph(NonWeightedDirectionalGraphOnLists * graph){
     std::cout<<endl;
     for(int i =0; i<graph->number_of_nodes; i++){
         std::cout<<graph->nodes[i]->val<<
