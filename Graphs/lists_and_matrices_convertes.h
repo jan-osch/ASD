@@ -1,8 +1,0 @@
-//
-// Created by Janusz Grzesik on 09.06.15.
-//
-
-#ifndef ASD_LISTS_AND_MATRICES_CONVERTES_H
-#define ASD_LISTS_AND_MATRICES_CONVERTES_H
-
-#endif //ASD_LISTS_AND_MATRICES_CONVERTES_H

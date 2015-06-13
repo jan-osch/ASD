@@ -1,16 +1,16 @@
-#ifndef ASD_TOPOLOGICAL_SORTING_H
-#define ASD_TOPOLOGICAL_SORTING_H
-
 //
 // Created by Janusz Grzesik on 13.06.15.
 //
+
+#ifndef ASD_DFS_H
+#define ASD_DFS_H
+
 using namespace std;
 
 #include "string"
 #include "vector"
-#include "graphs.h"
 
-void DFSVisit_topological(vector<vector<int>> graph,
+void DFSVisit(vector<vector<int>> graph,
               vector<GraphNodeColor> &colors,
               vector<int> &distances,
               vector<int> &parents,
@@ -24,7 +24,8 @@ void DFSVisit_topological(vector<vector<int>> graph,
 
     colors[index_to_visit] = GREY;
     times_in[index_to_visit]=time;
-
+    result+="\n";
+    result+=labels[index_to_visit];
 
     for(int i=0; i<distances.size(); i++){
         if( i!=index_to_visit && colors[i] == WHITE) {
@@ -32,25 +33,22 @@ void DFSVisit_topological(vector<vector<int>> graph,
                 parents[i] = index_to_visit;
                 distances[i] = distances[index_to_visit] + graph[index_to_visit][i];
                 time++;
-                DFSVisit_topological(graph, colors, distances, parents, times_in, times_out, labels, i, time, result, directed);
+                DFSVisit(graph, colors, distances, parents, times_in, times_out, labels, i, time, result, directed);
             }
             if (!directed && graph[i][index_to_visit] != 0 && colors[i] == WHITE){
                 parents[i] = index_to_visit;
                 distances[i] = distances[index_to_visit] + graph[i][index_to_visit];
                 time++;
-                DFSVisit_topological(graph, colors, distances, parents, times_in, times_out, labels, i, time, result, directed);
+                DFSVisit(graph, colors, distances, parents, times_in, times_out, labels, i, time, result, directed);
             }
         }
     }
     time++;
     colors[index_to_visit]=BLACK;
-    string new_result = labels[index_to_visit]+"\n";
-    new_result+=result;
-    result=new_result;
     times_out[index_to_visit]=time;
 }
 
-string DFS_topological(vector<vector<int>> graph, vector<string> &labels, bool directed){
+string DFS(vector<vector<int>> graph, vector<string> &labels, bool directed){
     // A Cormen style implementation of DFS
     // Recursively searches all nodes that adjust to current node in the graph
     // Changes colors of Nodes that are visited: WHITE->GREY->BLACK
@@ -80,7 +78,7 @@ string DFS_topological(vector<vector<int>> graph, vector<string> &labels, bool d
     for(int i=0; i<size; i++ ){
         if(colors[i]==WHITE){
             time++;
-            DFSVisit_topological(graph, colors, distances, parents, time_in, time_out, labels, i, time, result, directed);
+            DFSVisit(graph, colors, distances, parents, time_in, time_out, labels, i, time, result, directed);
         }
     }
     vector<string> new_labels(size);
@@ -93,5 +91,4 @@ string DFS_topological(vector<vector<int>> graph, vector<string> &labels, bool d
     return result;
 };
 
-
-#endif //ASD_TOPOLOGICAL_SORTING_H
+#endif //ASD_DFS_H

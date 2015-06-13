@@ -5,6 +5,7 @@
 //
 #include "graphs.h"
 #include <iostream>
+#include <assert.h>
 
 NonWeightedDirectionalGraphOnLists * graph_builder(){
     // A function that helps to build a graph
@@ -33,6 +34,29 @@ NonWeightedDirectionalGraphOnLists * graph_builder(){
     result->edges=edges;
     result->nodes=nodes;
     result->number_of_nodes=number_of_nodes;
+    return result;
+}
+
+vector<vector<int>> generate_graph_on_matrix(int number_of_nodes, int density, bool directional, int weight_limit){
+    assert (density>0 && density<=100);
+    assert (weight_limit>=1);
+    vector<vector<int>> result(number_of_nodes, vector<int>(number_of_nodes, 0)); // initalise everything to zero
+    srand (time(NULL));
+
+    for(int i=0; i<number_of_nodes; i++) {
+        for (int j = 0; j < number_of_nodes; j++) {
+            if (rand() % 100 <= density) {
+                //generate node
+                if (!directional && result[j][i] != 0 ){
+                    result[i][j] = max(1, rand() % weight_limit);
+                    result[j][i] = result[i][j];
+                }
+                else{
+                    result[i][j] = max(1, rand() % weight_limit);
+                }
+            }
+        }
+    }
     return result;
 }
 

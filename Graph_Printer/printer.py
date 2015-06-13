@@ -1,8 +1,7 @@
 #!/Users/Janusz/anaconda/bin/python2
 
-__author__ = "Janusz Grzesik"
-
 from __future__ import print_function
+__author__ = "Janusz Grzesik"
 
 import graphviz as gv
 import argparse
@@ -22,21 +21,23 @@ def create_weighted_graph(parsed_arguments):
         graph = gv.Graph()
 
     for y in range(number_of_nodes):
+        graph.node(get_label(y,labels))
         for x in range(number_of_nodes):
-            weight = elements_of_matrix [y * number_of_nodes + x]
-            if ( weight != 0):
+            weight = int(elements_of_matrix [y * number_of_nodes + x])
+            if ( weight != 0 ):
                 if parsed_arguments.d:
-                    graph.edge(get_label(y,labels), get_label(x,labels), label=weight)
-                elif elements_of_matrix [x * number_of_nodes + y] != -1: 
-                    graph.edge(get_label(y,labels), get_label(x,labels), label=weight)
-                    elements_of_matrix[y * number_of_nodes + x] =-1
+                    graph.edge(get_label(y,labels), get_label(x,labels), label=str(weight))
+                else:
+                    if int(elements_of_matrix [x * number_of_nodes + y]) != -1: 
+                        graph.edge(get_label(y,labels), get_label(x,labels), label=str(weight))
+                        elements_of_matrix[y * number_of_nodes + x] =-1
     
     return graph
 
 def create_non_weighted_graph(parsed_arguments):
     number_of_nodes = parsed_arguments.number_of_nodes
     elements_of_matrix = parsed_arguments.Matrix.split(' ')
-    
+
     if not parsed_arguments.l:
         labels = []
     else:
@@ -48,14 +49,16 @@ def create_non_weighted_graph(parsed_arguments):
         graph = gv.Graph()
 
     for y in range(number_of_nodes):
+        graph.node(get_label(y,labels))
         for x in range(number_of_nodes):
-            weight = elements_of_matrix [y * number_of_nodes + x]
+            weight = int(elements_of_matrix [y * number_of_nodes + x])
             if ( weight != 0):
                 if parsed_arguments.d:
                     graph.edge(get_label(y,labels), get_label(x,labels))
-                elif elements_of_matrix [x * number_of_nodes + y] != -1: 
-                    graph.edge(get_label(y,labels), get_label(x,labels))
-                    elements_of_matrix[y * number_of_nodes + x] =-1
+                else: 
+                    if int(elements_of_matrix [x * number_of_nodes + y]) != -1: 
+                        graph.edge(get_label(y,labels), get_label(x,labels))
+                        elements_of_matrix[y * number_of_nodes + x] =-1
 
     return graph
 

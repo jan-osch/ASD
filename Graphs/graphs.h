@@ -78,7 +78,7 @@ string BFS(NonWeightedDirectionalGraphOnLists * graph, int index_to_start){
 }
 
 
-void DFSVisit(NonWeightedDirectionalGraphOnLists * graph, int index_to_visit, int & time, string & result){
+void DFSVisit_old(NonWeightedDirectionalGraphOnLists * graph, int index_to_visit, int & time, string & result){
     graph->nodes[index_to_visit]->color=GREY;
     graph->nodes[index_to_visit]->time_in=time;
     result+="\n";
@@ -89,7 +89,7 @@ void DFSVisit(NonWeightedDirectionalGraphOnLists * graph, int index_to_visit, in
             graph->nodes[graph->edges[index_to_visit][i]]->parent=graph->nodes[index_to_visit];
             graph->nodes[graph->edges[index_to_visit][i]]->distance=graph->nodes[index_to_visit]->distance+1;
             time++;
-            DFSVisit(graph, graph->edges[index_to_visit][i], time, result);
+            DFSVisit_old(graph, graph->edges[index_to_visit][i], time, result);
         }
     }
     time++;
@@ -97,7 +97,7 @@ void DFSVisit(NonWeightedDirectionalGraphOnLists * graph, int index_to_visit, in
     graph->nodes[index_to_visit]->time_out=time;
 }
 
-string DFS(NonWeightedDirectionalGraphOnLists * graph){
+string DFS_old(NonWeightedDirectionalGraphOnLists * graph){
     // A Cormen style implementation of DFS
     // Recursively searches all nodes that adjust to current node in the graph
     // Changes colors of Nodes that are visited: WHITE->GREY->BLACK
@@ -113,7 +113,7 @@ string DFS(NonWeightedDirectionalGraphOnLists * graph){
     for(int i=0; i<graph->number_of_nodes; i++ ){
         if(graph->nodes[i]->color==WHITE){
             time++;
-            DFSVisit(graph,i, time, result);
+            DFSVisit_old(graph,i, time, result);
         }
     }
     return result;
