@@ -6,11 +6,12 @@
 //
 using namespace std;
 
+#include <stack>
 #include "string"
 #include "vector"
 #include "graphs.h"
 
-void DFSVisit_topological(vector<vector<int>> graph,
+void DFSVisit_topological(vector<vector<int> > graph,
               vector<GraphNodeColor> &colors,
               vector<int> &distances,
               vector<int> &parents,
@@ -50,7 +51,7 @@ void DFSVisit_topological(vector<vector<int>> graph,
     times_out[index_to_visit]=time;
 }
 
-string DFS_topological(vector<vector<int>> graph, vector<string> &labels, bool directed){
+string DFS_topological(vector<vector<int> > graph, vector<string> &labels, bool directed){
     // A Cormen style implementation of DFS
     // Recursively searches all nodes that adjust to current node in the graph
     // Changes colors of Nodes that are visited: WHITE->GREY->BLACK
@@ -92,6 +93,117 @@ string DFS_topological(vector<vector<int>> graph, vector<string> &labels, bool d
     }
     return result;
 };
+
+vector<int> topological_sorting(vector<vector<int> > graph, vector<string> &labels){
+
+
+    int size = graph[0].size();
+    vector<int> order(size,0);
+    for(int i =0; i<size; i++){
+        for(int j=0; j<size; j++){
+            if(graph[j][i]!=0){
+                order[j]++;
+            }
+        }
+    }
+    stack<int> zero_order;
+    for(int i =0; i<size; i++) {
+        if (order[i] == 0) {
+            zero_order.push(i);
+        }
+    }
+
+    vector<int> final_order(size);
+    int counter = 0;
+
+    int x;
+    while(!zero_order.empty()){
+        x = zero_order.top();
+        zero_order.pop();
+        final_order[x]=counter++;
+
+        for(int j=0; j<size; j++){
+            if(graph[j][x]!=0){
+                order[j]--;
+                if(order[j]==0){
+                    zero_order.push(j);
+                }
+            }
+        }
+    }
+    if(labels.size()==0){
+        labels = vector<string>(size);
+        for(int i=0; i<size; i++){
+            labels[i]=to_string(i);
+        }
+    }
+
+    for(int i=0; i<size; i++){
+        labels[i]+="/"+to_string(final_order[i]);
+    }
+    return final_order;
+}
+
+int find_parent_by_order(vector<vector<int> > graph, vector<int> order, int index){
+    int size = graph[0].size();
+    int max_index = index;
+    int temp;
+    for(int i =0; i < size; i++){
+        if(graph[i][index]!=0){
+            temp = find_parent_by_order(graph,order,i);
+            if(order[temp]  > order[max_index]){
+                max_index = temp;
+            }
+        }
+    }
+    return max_index;
+}
+
+int find_child_by_order(vector<vector<int> > graph, vector<int> order, int index){
+    int size = graph[0].size();
+    int min_index = index;
+    int temp;
+    for(int i =0; i < size; i++){
+        if(graph[index][i]!=0){
+            temp = find_child_by_order(graph,order,i);
+            if(order[temp]  < order[min_index]){
+                min_index = temp;
+            }
+        }
+    }
+    return min_index;
+}
+
+void wrap_with_start_and_finish(vector<vector<int> > &graph, vector<string> &labels ){
+    int original_size = graph[0].size();
+    vector<int> order = topological_sorting(graph, labels);
+    vector<vector<int> > result (original_size+2, vector<int>(original_size+2, 0));
+
+    int suspect_parent;
+    int suspect_child;
+    for(int i=0; i< original_size; i++){
+        suspect_parent = find_parent_by_order(graph, order, i);
+        suspect_child = find_child_by_order(graph, order, i);
+
+        if(result[0][suspect_parent+1]!=1){
+            result[0][suspect_parent+1]=1;
+        }
+        if(result[suspect_child+1][original_size+1]!=1){
+            result[suspect_child+1][original_size+1]=1;
+        }
+        for(int j=0; j<original_size; j++){
+            result[i+1][j+1]=graph[i][j];
+        }
+    }
+    vector<string> new_labels(original_size+2);
+    new_labels[0]="START";
+    for(int i=0; i<original_size; i++){
+        new_labels[i+1]=labels[i];
+    }
+    new_labels[original_size+1]="END";
+    graph=result;
+    labels=new_labels;
+}
 
 
 #endif //ASD_TOPOLOGICAL_SORTING_H

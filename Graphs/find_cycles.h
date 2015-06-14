@@ -12,7 +12,7 @@ using namespace std;
 #include "string"
 #include "graphs.h"
 
-void DFSVisit_cycle(vector<vector<int>> graph,
+bool DFSVisit_cycle(vector<vector<int> > graph,
               vector<GraphNodeColor> &colors,
               vector<int> &distances,
               vector<int> &parents,
@@ -21,13 +21,11 @@ void DFSVisit_cycle(vector<vector<int>> graph,
               vector<string> labels,
               int index_to_visit,
               int & time,
-              string & result,
               bool directed){
 
     colors[index_to_visit] = GREY;
     times_in[index_to_visit]=time;
-    result+="\n";
-    result+=labels[index_to_visit];
+    bool flag = false;
 
     for(int i=0; i<distances.size(); i++){
         if( colors[i] == WHITE) {
@@ -35,30 +33,33 @@ void DFSVisit_cycle(vector<vector<int>> graph,
                 parents[i] = index_to_visit;
                 distances[i] = distances[index_to_visit] + graph[index_to_visit][i];
                 time++;
-                DFSVisit_cycle(graph, colors, distances, parents, times_in, times_out, labels, i, time, result, directed);
+                flag = flag || DFSVisit_cycle(graph, colors, distances, parents, times_in, times_out, labels, i, time, directed);
             }
             if (!directed && graph[i][index_to_visit] != 0 && colors[i] == WHITE){
                 parents[i] = index_to_visit;
                 distances[i] = distances[index_to_visit] + graph[i][index_to_visit];
                 time++;
-                DFSVisit_cycle(graph, colors, distances, parents, times_in, times_out, labels, i, time, result, directed);
+                flag = flag || DFSVisit_cycle(graph, colors, distances, parents, times_in, times_out, labels, i, time, directed);
             }
         }
         else{
-            if (!directed && graph[index_to_visit][i] != 0 ){
+            if (!directed && graph[index_to_visit][i] != 0 && parents[index_to_visit]!=i){
                 cout<<"CYCLE! "<<labels[i]<<endl;
+                flag = true;
             }
             if (directed && graph[index_to_visit][i] != 0 && colors[i]==GREY ){
                 cout<<"CYCLE! "<<labels[i]<<endl;
+                flag = true;
             }
         }
     }
     time++;
     colors[index_to_visit]=BLACK;
     times_out[index_to_visit]=time;
+    return flag;
 }
 
-string DFS_cycle(vector<vector<int>> graph, vector<string> &labels, bool directed){
+bool DFS_cycle(vector<vector<int> > graph, vector<string> &labels, bool directed){
     // A Cormen style implementation of DFS
     // Recursively searches all nodes that adjust to current node in the graph
     // Changes colors of Nodes that are visited: WHITE->GREY->BLACK
@@ -82,23 +83,17 @@ string DFS_cycle(vector<vector<int>> graph, vector<string> &labels, bool directe
             labels[i]=to_string(i);
         }
     }
-
+    bool flag = false;
     int time=0;
-    string result = "";
     for(int i=0; i<size; i++ ){
         if(colors[i]==WHITE){
             time++;
-            DFSVisit_cycle(graph, colors, distances, parents, time_in, time_out, labels, i, time, result, directed);
+            if (DFSVisit_cycle(graph, colors, distances, parents, time_in, time_out, labels, i, time, directed)){
+                flag = true;
+            }
         }
     }
-    vector<string> new_labels(size);
-    for(int i=0; i<size;i++){
-        new_labels[i]=labels[i]+"/"+to_string(distances[i])+"/"+labels[parents[i]]+"/"+to_string(time_in[i])+"/"+to_string(time_out[i]);
-    }
-    for(int i=0; i<size; i++){
-        labels[i]=new_labels[i];
-    }
-    return result;
+    return flag;
 };
 
 #endif //ASD_FIND_CYCLES_H

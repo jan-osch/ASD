@@ -4,6 +4,8 @@
 // Created by Janusz Grzesik on 11.05.15.
 //
 #include "graphs.h"
+#include "find_cycles.h"
+#include "path_finder.h"
 #include <iostream>
 #include <assert.h>
 
@@ -19,7 +21,7 @@ NonWeightedDirectionalGraphOnLists * graph_builder(){
         nodes[i]=new GraphNode();
         cin>>nodes[i]->val;
     }
-    vector <vector<int>> edges(number_of_nodes);
+    vector <vector<int> > edges(number_of_nodes);
     int size;
     int temp;
     for(int i=0; i<number_of_nodes; i++){
@@ -37,11 +39,11 @@ NonWeightedDirectionalGraphOnLists * graph_builder(){
     return result;
 }
 
-vector<vector<int>> generate_graph_on_matrix(int number_of_nodes, int density, bool directional, int weight_limit){
+vector<vector<int> > generate_graph_on_matrix(int number_of_nodes, int density, bool directional, int weight_limit){
     assert (density>0 && density<=100);
     assert (weight_limit>=1);
-    vector<vector<int>> result(number_of_nodes, vector<int>(number_of_nodes, 0)); // initalise everything to zero
-    srand (time(NULL));
+    vector<vector<int> > result(number_of_nodes, vector<int>(number_of_nodes, 0)); // initalise everything to zero
+//    srand (time(NULL));
 
     for(int i=0; i<number_of_nodes; i++) {
         for (int j = 0; j < number_of_nodes; j++) {
@@ -52,6 +54,25 @@ vector<vector<int>> generate_graph_on_matrix(int number_of_nodes, int density, b
                     result[j][i] = result[i][j];
                 }
                 else{
+                    result[i][j] = max(1, rand() % weight_limit);
+                }
+            }
+        }
+    }
+    return result;
+}
+
+vector<vector<int> > generate_DAG_matrix(int number_of_nodes, int density, int weight_limit){
+    assert (density>0 && density<=100);
+    assert (weight_limit>=1);
+    bool directional = true;
+    vector<vector<int> > result(number_of_nodes, vector<int>(number_of_nodes, 0)); // initalise everything to zero
+//    srand (time(NULL));
+    for(int i=0; i<number_of_nodes; i++) {
+        for (int j = 0; j < number_of_nodes; j++) {
+            if (rand() % 100 <= density) {
+                //generate node
+                if(!path_exists(result, j, i) && i!=j) {
                     result[i][j] = max(1, rand() % weight_limit);
                 }
             }

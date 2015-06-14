@@ -10,7 +10,7 @@ using namespace std;
 #include "string"
 #include "vector"
 
-void DFSVisit(vector<vector<int>> graph,
+void DFSVisit(vector<vector<int> > graph,
               vector<GraphNodeColor> &colors,
               vector<int> &distances,
               vector<int> &parents,
@@ -48,7 +48,7 @@ void DFSVisit(vector<vector<int>> graph,
     times_out[index_to_visit]=time;
 }
 
-string DFS(vector<vector<int>> graph, vector<string> &labels, bool directed){
+string DFS(vector<vector<int> > graph, vector<string> &labels, bool directed){
     // A Cormen style implementation of DFS
     // Recursively searches all nodes that adjust to current node in the graph
     // Changes colors of Nodes that are visited: WHITE->GREY->BLACK
