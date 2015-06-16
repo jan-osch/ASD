@@ -43,18 +43,16 @@ vector<vector<int> > generate_graph_on_matrix(int number_of_nodes, int density, 
     assert (density>0 && density<=100);
     assert (weight_limit>=1);
     vector<vector<int> > result(number_of_nodes, vector<int>(number_of_nodes, 0)); // initalise everything to zero
-//    srand (time(NULL));
 
     for(int i=0; i<number_of_nodes; i++) {
         for (int j = 0; j < number_of_nodes; j++) {
             if (rand() % 100 <= density) {
                 //generate node
-                if (!directional && result[j][i] != 0 ){
+                if (directional) {
+                    result[i][j] = max(1, rand() % weight_limit);
+                }else{
                     result[i][j] = max(1, rand() % weight_limit);
                     result[j][i] = result[i][j];
-                }
-                else{
-                    result[i][j] = max(1, rand() % weight_limit);
                 }
             }
         }
@@ -67,7 +65,7 @@ vector<vector<int> > generate_DAG_matrix(int number_of_nodes, int density, int w
     assert (weight_limit>=1);
     bool directional = true;
     vector<vector<int> > result(number_of_nodes, vector<int>(number_of_nodes, 0)); // initalise everything to zero
-//    srand (time(NULL));
+
     for(int i=0; i<number_of_nodes; i++) {
         for (int j = 0; j < number_of_nodes; j++) {
             if (rand() % 100 <= density) {
